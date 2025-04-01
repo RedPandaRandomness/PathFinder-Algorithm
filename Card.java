@@ -1,9 +1,11 @@
 
 /**
- * Write a description of class Card here.
+ * Makes a card 
+ * Has a face, suit, and state
+ * (State tells card if it's been paired
  *
- * @author (your name)
- * @version (a version number or a date)
+ * @author (Lora)
+ * @version (V1.0.0)
  */
 public class Card
 {
