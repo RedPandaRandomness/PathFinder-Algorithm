@@ -20,6 +20,7 @@ public class Tile extends Rectangle
      * 2 = visited, unmarked
      * 3 = visited, marked <- impossible?
      * 4 = tree (ignore)
+     * 5 = cabin (only 1)
      */
     
     /**
@@ -66,6 +67,11 @@ public class Tile extends Rectangle
         else if(state == 4) // tree
         {
             colour = new Color(0,0,0); // black
+            this.state = state;
+        }
+        else if(state == 5) // cabin (image over top)
+        {
+            colour = new Color(100,100,100); // gray
             this.state = state;
         }
     }
