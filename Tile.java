@@ -28,7 +28,7 @@ public class Tile extends Rectangle
     public Tile(int x, int y)
     {
         super(x,y,WIDTH,HEIGHT);
-        state = 0;
+        setState(0);
     }
 
     public static void main(String[] args)
