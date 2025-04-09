@@ -4,19 +4,19 @@ import java.awt.Point;
  * 
  * 
  */
-public class Node
+public class PathNode
 {
     //
     private Point coor;
-    private Node next; //a reference to the next item in our deck
+    private PathNode next; //a reference to the next item in our deck
     
-    public Node() //default constructor
+    public PathNode() //default constructor
     {
         coor = new Point(0,0);
         next = null; // no other value 
     }
     
-    public Node(int x, int y)
+    public PathNode(int x, int y)
     {
         coor = new Point(x,y); //unknown
         next = null; // no other value 
@@ -32,12 +32,12 @@ public class Node
         coor.move(x,y);
     }
     
-    public void setNext(Node next){
+    public void setNext(PathNode next){
         this.next = next;
     }
     
     
-    public Node getNext(){
+    public PathNode getNext(){
         return next;
     }
     
