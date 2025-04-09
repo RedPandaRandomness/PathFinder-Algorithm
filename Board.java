@@ -68,7 +68,6 @@ public class Board extends JPanel
                     
                 //print house
                 if(grid[i][j].getState() == 5){
-                    out.println("homse");
                     ImageIcon brush = house;
         
                     brush.paintIcon(this,g,
