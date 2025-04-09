@@ -9,7 +9,7 @@ import java.awt.Point;
 public class Ranger
 {
     // instance variables - replace the example below with your own
-    private Point location;
+    public Point location;
     Board maze;
     ToCheckNode top = new ToCheckNode();
     
@@ -22,7 +22,6 @@ public class Ranger
         location = new Point(0,0);
         maze = board;
         
-        look();
     }
     
     public Point getLocation()
@@ -46,7 +45,7 @@ public class Ranger
     
     public void setLocation(Point location)
     {
-        this.location = location;
+        this.location.translate(location.x, location.y);
     }
     
     public void Cpush(Point coor) { //check push
@@ -59,8 +58,6 @@ public class Ranger
         
         return null;
     }
-   
-    
     
     public void look()
     {
@@ -112,6 +109,8 @@ public class Ranger
         }
         
         System.out.println(moveTo);
-        setLocation(moveTo);
+        maze.grid[location.x][location.y].setState(1);
+        setLocation(moveTo);//moves
+        //.grid[location.x][location.y].setState(1);
     }
 }
