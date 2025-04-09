@@ -9,7 +9,8 @@ import javax.swing.JFrame;
 public class Driver
 {
     // instance variables - replace the example below with your own
-    Board maze;
+    public Board maze;
+    public Ranger him;
 
     /**
      * Constructor for objects of class Driver
@@ -24,6 +25,7 @@ public class Driver
         
         //Makes new game board
         maze = new Board();
+        him = new Ranger(maze);
         
         frame.getContentPane().add(maze);
         frame.pack();
@@ -33,7 +35,6 @@ public class Driver
 
     public static void main(String[] args)
     {
-        System.out.println("Driver");
         Driver game = new Driver();
     }
 }
