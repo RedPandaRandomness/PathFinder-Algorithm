@@ -11,7 +11,9 @@ public class Ranger
     // instance variables - replace the example below with your own
     public Point location;
     Board maze;
-    ToCheckNode top = new ToCheckNode();
+    ToCheckNode topC = new ToCheckNode();
+    PathNode topP = new PathNode();
+    
     
 
     /**
@@ -38,25 +40,47 @@ public class Ranger
         return location.y;
     }
     
-    public void setLocation(int x, int y)
+    public void setLocation(Point location)
     {
-        location.move(x,y);
+        this.location = location;
     }
     
-    public void setLocation(Point location)
+    public void move(Point location)
     {
         this.location.translate(location.x, location.y);
     }
     
-    public void Cpush(Point coor) { //check push
+    public void Cpush(Point coor) { //Pushes point to check later
       ToCheckNode newTop = new ToCheckNode(coor);  // Store N in the new Node.
-      newTop.setNext(top);   // The new Node points to the old top.
-      top = newTop;        // The new item is now on top.
+      newTop.setNext(topC);   // The new Node points to the old top.
+      topC = newTop;        // The new item is now on top.
     }
     
     public Point cPop(){
-        
-        return null;
+        if (topC == null ){
+            throw new IllegalStateException(
+                "Can't pop from an empty stack.");
+            }
+        Point coor = topC.getCoor();
+        topC = topC.getNext();
+        return coor;
+    }
+    
+    public void pPush(Point coor) { //Pushes point to check later
+      PathNode newTop = new PathNode(coor);  // Store N in the new Node.
+      newTop.setNext(topP);   // The new Node points to the old top.
+      topP = newTop;        // The new item is now on top.
+      System.out.println(topP.getCoor());
+    }
+    
+    public Point pPop(){
+        if (topP == null ){
+            throw new IllegalStateException(
+                "Can't pop from an empty stack.");
+            }
+        Point coor = topP.getCoor();
+        topP = topP.getNext();
+        return coor;
     }
     
     public void look()
@@ -64,53 +88,61 @@ public class Ranger
         Point moveTo = new Point(0,0);
         
         //Check north
-        System.out.println("Check North");
-        if(location.y-1 >= 0 && maze.grid[location.x][location.y-1].getState() == 0){
+        if(tileValid(location.x, location.y-1)){
               if(moveTo.equals(new Point (0,0))){
-                System.out.println("North");
                 moveTo = new Point(0,-1);
             }
             else{
-                Cpush(new Point(location.x,location.y-1));
+                Cpush(new Point(location.x,location.y));
             }
         }
         //Check East
-        System.out.println("Check East");
         if(location.x+1 <= 11 && maze.grid[location.x+1][location.y].getState() == 0){
               if(moveTo.equals(new Point (0,0))){
-                System.out.println("E");
                 moveTo = new Point(1,0);
             }
             else{
-                Cpush(new Point(location.x+1,location.y));
+                Cpush(new Point(location.x,location.y));
             }
         }
         //Check South
-        System.out.println("Check South");
         if(location.y+1 <= 11 && maze.grid[location.x][location.y+1].getState() == 0){
               if(moveTo.equals(new Point (0,0))){
-                System.out.println("S");
                 moveTo = new Point(0,1);
             }
             else{
-                Cpush(new Point(location.x,location.y+1));
+                Cpush(new Point(location.x,location.y));
             }
         }
         //Check West
-        System.out.println("Check West");
         if(location.x-1 >= 0 &&maze.grid[location.x-1][location.y].getState() == 0){
               if(moveTo.equals(new Point (0,0))){
-                System.out.println("W");
                 moveTo = new Point(-1,0);
             }
             else{
-                Cpush(new Point(location.x-1,location.y));
+                Cpush(new Point(location.x,location.y));
             }
         }
-        
-        System.out.println(moveTo);
         maze.grid[location.x][location.y].setState(1);
-        setLocation(moveTo);//moves
-        //.grid[location.x][location.y].setState(1);
+        move(moveTo);
+        
+        if(moveTo.equals(new Point(0,0))){
+            setLocation(cPop());
+            //backtrack();
+        }
+        
+        
+    }
+    
+    private boolean tileValid(int x, int y){
+        return x>=0 && y>=0 && x<=11 && y<=11 && maze.grid[x][y].getState() != 4 
+                && maze.grid[x][y].getState() != 1;
+    }
+    
+    private void backtrack()
+    {
+        if(!topP.getCoor().equals(topC.getCoor())){
+             setLocation(pPop());
+        }
     }
 }
