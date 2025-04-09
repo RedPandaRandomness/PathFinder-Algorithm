@@ -6,6 +6,9 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.BasicStroke;
 import javax.swing.ImageIcon;
+import javax.swing.Timer;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 /**
  * Write a description of class Board here.
@@ -20,7 +23,10 @@ public class Board extends JPanel
     public static final int HEIGHT = 600;
     Tile[][] grid = new Tile[12][12];
     ImageIcon house = new ImageIcon("Sprites/drhouse.jpg");
-    ImageIcon ranger = new ImageIcon("Sprites/rangerkirby.jpg");
+    ImageIcon ranger = new ImageIcon("Sprites/rangerkirby.png");
+    Ranger him;
+    
+    Timer timer;
 
     /**
      * Constructor for objects of class Board
@@ -43,6 +49,12 @@ public class Board extends JPanel
             }
         }
         setBoard(0); // asks for value 0-2
+        
+        findPath();
+    }
+
+    public void sendRanger(Ranger ranger){
+        him = ranger;
     }
 
     public void paintComponent(Graphics g)
@@ -74,8 +86,29 @@ public class Board extends JPanel
 
             }
         }
+
+        ImageIcon ran = ranger;
+
+        ran.paintIcon(this,g,
+            him.location.x*50,him.location.y*50);
+
     }
-    
+
+    public void findPath(){
+        //Delay before turning cards over automatically
+        timer = new Timer(1000,new ActionListener(){
+                public void actionPerformed(ActionEvent evt){
+                him.look();
+                
+                repaint();
+            }
+        });
+
+        //timer.setRepeats(false);
+        timer.start();
+        
+    }
+
     public void setBoard(int mazeType)
     {
         if(mazeType == 0)
@@ -83,7 +116,7 @@ public class Board extends JPanel
             // 0 = path
             // 4 = tree
             // 5 = cabin
-            
+
             // line 1
             grid[1][0].setState(4);
             grid[2][0].setState(4);
