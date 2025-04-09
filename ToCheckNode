@@ -1,0 +1,45 @@
+import java.awt.Point;
+
+/**
+ * 
+ * 
+ */
+public class ToCheckNode
+{
+    //
+    private Point coor;
+    private ToCheckNode next; //a reference to the next item in our deck
+    
+    public ToCheckNode() //default constructor
+    {
+        coor = new Point(0,0);
+        next = null; // no other value 
+    }
+    
+    public ToCheckNode(int x, int y)
+    {
+        coor = new Point(x,y); //unknown
+        next = null; // no other value 
+    }
+    
+    public Point getcoor()
+    {
+        return coor;
+    }
+    
+    public void setcoor(int x, int y)
+    {
+        coor.move(x,y);
+    }
+    
+    public void setNext(ToCheckNode next){
+        this.next = next;
+    }
+    
+    
+    public ToCheckNode getNext(){
+        return next;
+    }
+    
+    
+}
