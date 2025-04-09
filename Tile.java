@@ -14,13 +14,12 @@ public class Tile extends Rectangle
     public static final int WIDTH = 50;
     public static final int HEIGHT = 50;
     public Color colour;
-    public int state = 0;
+    private int state = 0;
     /* 0 = unvisited, unmarked
      * 1 = unvisited, marked
      * 2 = visited, unmarked
      * 3 = visited, marked <- impossible?
      * 4 = tree (ignore)
-     * 5 = cabin (only 1)
      */
     
     /**
@@ -39,7 +38,7 @@ public class Tile extends Rectangle
     
     public int getState()
     {
-        return 0;
+        return state;
     }
     
     public void setState(int state)
@@ -69,9 +68,9 @@ public class Tile extends Rectangle
             colour = new Color(0,0,0); // black
             this.state = state;
         }
-        else if(state == 5) // cabin (image over top)
+        else if(state == 5) // 
         {
-            colour = new Color(100,100,100); // gray
+            colour = new Color(0,0,0); // black
             this.state = state;
         }
     }
