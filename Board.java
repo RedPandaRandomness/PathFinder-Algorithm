@@ -37,6 +37,11 @@ public class Board extends JPanel
         setPreferredSize(new Dimension(WIDTH,HEIGHT));
         setBackground(new Color(211,211,211));
 
+        //saftey check in case program didn't properly close
+        if(timer!= null && timer.isRunning()){
+            timer.stop();
+        }
+        
         main();
     }
 
@@ -87,16 +92,16 @@ public class Board extends JPanel
             }
         }
 
-        ImageIcon ran = ranger;
+        ImageIcon rangerBrush = ranger;
 
-        ran.paintIcon(this,g,
+        rangerBrush.paintIcon(this,g,
             him.location.x*50,him.location.y*50);
 
     }
 
     public void findPath(){
         //Delay before turning cards over automatically
-        timer = new Timer(1000,new ActionListener(){
+        timer = new Timer(1500,new ActionListener(){
                 public void actionPerformed(ActionEvent evt){
                 him.look();
                 
