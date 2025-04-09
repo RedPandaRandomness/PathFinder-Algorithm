@@ -41,7 +41,7 @@ public class Board extends JPanel
                 grid[i][j] = new Tile(i*50,j*50);
             }
         }
-        setBoard(0); // asks for value 0-2
+        setBoard(1); // asks for value 0-2
     }
 
     public void paintComponent(Graphics g)
@@ -74,15 +74,9 @@ public class Board extends JPanel
             }
         }
     }
-    
-    public void setBoard(int mazeType)
-    {
-        if(mazeType == 0)
-        {
-            // 0 = path
-            // 4 = tree
-            // 5 = cabin
-            
+
+    public void setBoard(int mazeType){
+        if(mazeType == 0){
             // line 1
             grid[1][0].setState(4);
             grid[2][0].setState(4);
@@ -162,25 +156,94 @@ public class Board extends JPanel
             grid[7][11].setState(4);
             grid[9][11].setState(4);
             grid[10][11].setState(4);
-            grid[11][11].setState(5);
-        }
+            grid[11][11].setState(5);}
         else if(mazeType == 1)
         {
+            // line 1
+            grid[5][0].setState(4);
+            grid[7][0].setState(4);
+            grid[8][0].setState(4);
+            grid[9][0].setState(4);
+            grid[10][0].setState(4);
+            grid[11][0].setState(4);
+            // line 2
+            grid[1][1].setState(4);
+            grid[2][1].setState(4);
+            grid[3][1].setState(4);
+            grid[4][1].setState(4);
+            grid[5][1].setState(4);
+            grid[7][1].setState(4);
+            grid[9][1].setState(4);
+            grid[11][1].setState(4);
+            // line 3
+            grid[2][2].setState(4);
+            grid[7][2].setState(4);
+            grid[9][2].setState(4);
+            grid[11][2].setState(4);
+            // line 4
+            grid[1][3].setState(4);
+            grid[2][3].setState(4);
+            grid[4][3].setState(4);
+            grid[6][3].setState(4);
+            grid[7][3].setState(4);
+            // line 5
+            grid[4][4].setState(4);
+            grid[6][4].setState(4);
+            grid[9][4].setState(4);
+            grid[11][4].setState(4);
+            // line 6
+            grid[0][5].setState(4);
+            grid[1][5].setState(4);
+            grid[2][5].setState(4);
+            grid[3][5].setState(4);
+            grid[4][5].setState(4);
+            grid[6][5].setState(4);
+            grid[7][5].setState(4);
+            grid[8][5].setState(4);
+            grid[9][5].setState(4);
+            // line 7
+            grid[1][6].setState(4);
+            grid[3][6].setState(4);
+            grid[11][6].setState(4);
+            // line 8
+            grid[1][7].setState(4);
+            grid[3][7].setState(4);
+            grid[5][7].setState(4);
+            grid[6][7].setState(4);
+            grid[8][7].setState(4);
+            grid[9][7].setState(4);
+            grid[10][7].setState(4);
+            grid[11][7].setState(4);
+            // line 9
+            grid[1][8].setState(4);
+            grid[5][8].setState(4);
+            grid[6][8].setState(4);
+            grid[8][8].setState(4);
+            // line 10
+            grid[3][9].setState(4);
+            grid[5][9].setState(4);
+            grid[10][9].setState(4);
+            // line 11
+            grid[0][10].setState(4);
+            grid[1][10].setState(4);
+            grid[2][10].setState(4);
+            grid[3][10].setState(4);
+            grid[5][10].setState(4);
+            grid[6][10].setState(4);
+            grid[8][10].setState(4);
+            grid[10][10].setState(4);
+            // line 12
+            grid[5][11].setState(4);
+            grid[8][11].setState(4);
+            grid[10][11].setState(4);
+            grid[11][11].setState(5);
+        }
+        else if(mazeType == 2){
 
         }
-        else if(mazeType == 2)
-        {
-
-        }
-        else // shouldn't be called, panic
-        {
-            for(int i = 0; i < 12; i++)
-            {
-                for(int j = 0; j < 12; j++)
-                {
-                    grid[i][j].setState(5);
-                }
-            }
-        }
+        else{ // shouldn't be called, panic
+            for(int i = 0; i < 12; i++){
+                for(int j = 0; j < 12; j++){
+                    grid[i][j].setState(5);}}}
     }
 }
