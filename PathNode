@@ -1,45 +1,82 @@
-import java.awt.Point;
+import javax.swing.JFrame;
 
 /**
- * 
- * 
+ * Write a description of class Driver here.
+ *
+ * @author (your name)
+ * @version (a version number or a date)
  */
-public class PathNode
+public class Driver
 {
-    //
-    private Point coor;
-    private PathNode next; //a reference to the next item in our deck
+    // instance variables - replace the example below with your own
+    public Board maze;
+    public Ranger him;
+
+    /**
+     * Constructor for objects of class Driver
+     */
     
-    public PathNode() //default constructor
+    public Driver()
     {
-        coor = new Point(0,0);
-        next = null; // no other value 
+        // Setup the environment for drawing
+        JFrame frame = new JFrame();
+        frame.setTitle("PatherFinder Algorithm");
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        
+        //Makes new game board
+        maze = new Board();
+        him = new Ranger(maze);
+        maze.sendRanger(him);
+        
+        frame.getContentPane().add(maze);
+        frame.pack();
+        frame.setVisible(true);
+
     }
-    
-    public PathNode(int x, int y)
+
+    public static void main(String[] args)
     {
-        coor = new Point(x,y); //unknown
-        next = null; // no other value 
+        Driver game = new Driver();
     }
+}
+import javax.swing.JFrame;
+
+/**
+ * Write a description of class Driver here.
+ *
+ * @author (your name)
+ * @version (a version number or a date)
+ */
+public class Driver
+{
+    // instance variables - replace the example below with your own
+    public Board maze;
+    public Ranger him;
+
+    /**
+     * Constructor for objects of class Driver
+     */
     
-    public Point getcoor()
+    public Driver()
     {
-        return coor;
+        // Setup the environment for drawing
+        JFrame frame = new JFrame();
+        frame.setTitle("PatherFinder Algorithm");
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        
+        //Makes new game board
+        maze = new Board();
+        him = new Ranger(maze);
+        maze.sendRanger(him);
+        
+        frame.getContentPane().add(maze);
+        frame.pack();
+        frame.setVisible(true);
+
     }
-    
-    public void setcoor(int x, int y)
+
+    public static void main(String[] args)
     {
-        coor.move(x,y);
+        Driver game = new Driver();
     }
-    
-    public void setNext(PathNode next){
-        this.next = next;
-    }
-    
-    
-    public PathNode getNext(){
-        return next;
-    }
-    
-    
 }
