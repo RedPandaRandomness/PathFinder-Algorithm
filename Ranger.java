@@ -53,7 +53,7 @@ public class Ranger
       ToCheckNode newTop = new ToCheckNode(coor);
       newTop.setNext(topC);   // The new Node points to the old top.
       topC = newTop;        // The new item is now on top.
-      //System.out.println(topC.getNext());
+      System.out.println(topC.getCoor());
     }
     
     public void pPush(Point coor){
@@ -128,9 +128,7 @@ public class Ranger
                 }
             }
             maze.grid[location.x][location.y].setState(1);
-            System.out.println("Ranger Spot: "+location);
             if(!moveTo.equals(new Point(0,0))){pPush(location);}//Add location to path stack
-            System.out.println("Current Path top: "+topP.getCoor()); 
             move(moveTo);
             
         }
@@ -139,12 +137,9 @@ public class Ranger
         
         //dead end
         if(moveTo.equals(new Point(0,0))){
-            System.out.println("Current Path top: "+topP.getCoor());
             backtrack = true;
             System.out.println("Backtrack now");
-            
-            setLocation(pPop());
-            //backtrack();
+            backtrack();
             
         }
         maze.repaint();
@@ -153,11 +148,18 @@ public class Ranger
     
         private boolean tileValid(int x, int y){
         return x>=0 && y>=0 && x<=11 && y<=11 && maze.grid[x][y].getState() != 4 
-                && maze.grid[x][y].getState() != 1;
+                && maze.grid[x][y].getState() != 1 && maze.grid[x][y].getState() != 5;
     }
     
     private void backtrack()
     {
+        if(location.equals(topC.getCoor())){
+            cPop();
+            backtrack = false;
+        }
+        else{
+            setLocation(pPop());
+        }
         
     }
 }
