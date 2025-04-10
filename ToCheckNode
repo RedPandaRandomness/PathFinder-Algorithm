@@ -16,30 +16,31 @@ public class ToCheckNode
         next = null; // no other value 
     }
     
-    public ToCheckNode(int x, int y)
+    public ToCheckNode(Point coor)
     {
-        coor = new Point(x,y); //unknown
+        this.coor = coor; //unknown
         next = null; // no other value 
     }
     
-    public Point getcoor()
+    public Point getCoor()
     {
         return coor;
     }
     
-    public void setcoor(int x, int y)
+    public void setCoor(int x, int y)
     {
         coor.move(x,y);
+    }
+    public void setCoor(Point coor)
+    {
+        this.coor = coor;
     }
     
     public void setNext(ToCheckNode next){
         this.next = next;
     }
     
-    
     public ToCheckNode getNext(){
         return next;
     }
-    
-    
 }
