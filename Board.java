@@ -9,6 +9,7 @@ import javax.swing.ImageIcon;
 import javax.swing.Timer;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.Point;
 
 /**
  * Write a description of class Board here.
@@ -28,6 +29,7 @@ public class Board extends JPanel
     
     Timer timer;
 
+    public static int i = 0;
     /**
      * Constructor for objects of class Board
      */
@@ -100,18 +102,41 @@ public class Board extends JPanel
     }
 
     public void findPath(){
+        
         //Delay before turning cards over automatically
-        timer = new Timer(1500,new ActionListener(){
+        timer = new Timer(1000,new ActionListener(){
                 public void actionPerformed(ActionEvent evt){
                 him.look();
                 
                 repaint();
+                //int nope =0;
+            }
+        });
+
+        timer.start();
+        
+        /*MANUAL PUSH/POP
+        timer = new Timer(1000,new ActionListener(){
+                public void actionPerformed(ActionEvent evt){
+                //him.look();
+                if(i == 0)him.pPush(new Point(0,1));
+                if(i == 1)him.pPush(new Point(1,1));
+                if(i == 2)him.pPush(new Point(1,2));
+                else if(i>2 && i<5) him.pPop();
+                
+                
+                
+                repaint();
+                i++;
             }
         });
 
         //timer.setRepeats(false);
         timer.start();
+        */
         
+        
+       
     }
 
     public void setBoard(int mazeType)
