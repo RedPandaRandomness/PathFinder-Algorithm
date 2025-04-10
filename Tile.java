@@ -20,6 +20,7 @@ public class Tile extends Rectangle
      * 2 = visited, unmarked
      * 3 = visited, marked <- impossible?
      * 4 = tree (ignore)
+     * 5 = house
      */
     
     /**
@@ -68,7 +69,7 @@ public class Tile extends Rectangle
             colour = new Color(0,0,0); // black
             this.state = state;
         }
-        else if(state == 5) // 
+        else if(state == 5) // House
         {
             colour = new Color(0,0,0); // black
             this.state = state;
