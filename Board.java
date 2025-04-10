@@ -95,7 +95,7 @@ public class Board extends JPanel
         }
 
         ImageIcon rangerBrush = ranger;
-
+        
         rangerBrush.paintIcon(this,g,
             him.location.x*50,him.location.y*50);
 
@@ -104,7 +104,7 @@ public class Board extends JPanel
     public void findPath(){
         
         //Delay before turning cards over automatically
-        timer = new Timer(1000,new ActionListener(){
+        timer = new Timer(500,new ActionListener(){
                 public void actionPerformed(ActionEvent evt){
                 him.look();
                 
