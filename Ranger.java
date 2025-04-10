@@ -53,14 +53,12 @@ public class Ranger
       ToCheckNode newTop = new ToCheckNode(coor);
       newTop.setNext(topC);   // The new Node points to the old top.
       topC = newTop;        // The new item is now on top.
-      System.out.println(topC.getCoor());
     }
     
     public void pPush(Point coor){
         PathNode newTop = new PathNode(coor);
         newTop.setNext(topP);   // The new Node points to the old top.
         topP = newTop;        // The new item is now on top.
-        System.out.println("pPush: "+topP.getCoor());
     }
     
     public Point cPop(){
@@ -70,7 +68,6 @@ public class Ranger
         }
         Point coor = topC.getCoor();//Get coordinate of current top
         topC = topC.getNext();
-        System.out.println("CPop: "+topC.getCoor());
         return coor;
     }
     
@@ -81,7 +78,6 @@ public class Ranger
         }
         Point coor = topP.getCoor(); //Gets current top
         topP = topP.getNext(); //New top is old tops pointer
-        System.out.println("pPop: "+topP.getCoor());
         return coor;
     }
     
@@ -128,6 +124,7 @@ public class Ranger
                 }
             }
             maze.grid[location.x][location.y].setState(1);
+            System.out.println("Moving: "+moveTo);
             if(!moveTo.equals(new Point(0,0))){pPush(location);}//Add location to path stack
             move(moveTo);
             
@@ -147,8 +144,14 @@ public class Ranger
         }
     
         private boolean tileValid(int x, int y){
-        return x>=0 && y>=0 && x<=11 && y<=11 && maze.grid[x][y].getState() != 4 
-                && maze.grid[x][y].getState() != 1 && maze.grid[x][y].getState() != 5;
+            if(x>=0 && x<=11 && y>=0 && y<=11 &&
+                maze.grid[x][y].getState() != 1 &&
+                maze.grid[x][y].getState() != 4){
+                return true;
+            }
+            else{
+                return false;
+            }
     }
     
     private void backtrack()
