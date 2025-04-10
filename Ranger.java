@@ -13,8 +13,7 @@ public class Ranger
     Board maze;
     ToCheckNode topC = new ToCheckNode();
     PathNode topP = new PathNode();
-    
-    
+    private boolean backtrack = false;
 
     /**
      * Constructor for objects of class Ranger
@@ -45,104 +44,120 @@ public class Ranger
         this.location = location;
     }
     
-    public void move(Point location)
+    public void move(Point move)
     {
-        this.location.translate(location.x, location.y);
+        location = new Point(location.x+move.x, location.y+move.y);
     }
     
-    public void Cpush(Point coor) { //Pushes point to check later
-      ToCheckNode newTop = new ToCheckNode(coor);  // Store N in the new Node.
+    public void cPush(Point coor) { //Pushes point to check later
+      ToCheckNode newTop = new ToCheckNode(coor);
       newTop.setNext(topC);   // The new Node points to the old top.
       topC = newTop;        // The new item is now on top.
+      //System.out.println(topC.getNext());
+    }
+    
+    public void pPush(Point coor){
+        PathNode newTop = new PathNode(coor);
+        newTop.setNext(topP);   // The new Node points to the old top.
+        topP = newTop;        // The new item is now on top.
+        System.out.println("pPush: "+topP.getCoor());
     }
     
     public Point cPop(){
         if (topC == null ){
             throw new IllegalStateException(
                 "Can't pop from an empty stack.");
-            }
-        Point coor = topC.getCoor();
+        }
+        Point coor = topC.getCoor();//Get coordinate of current top
         topC = topC.getNext();
+        System.out.println("CPop: "+topC.getCoor());
         return coor;
-    }
-    
-    public void pPush(Point coor) { //Pushes point to check later
-      PathNode newTop = new PathNode(coor);  // Store N in the new Node.
-      newTop.setNext(topP);   // The new Node points to the old top.
-      topP = newTop;        // The new item is now on top.
-      System.out.println(topP.getCoor());
     }
     
     public Point pPop(){
         if (topP == null ){
             throw new IllegalStateException(
                 "Can't pop from an empty stack.");
-            }
-        Point coor = topP.getCoor();
-        topP = topP.getNext();
+        }
+        Point coor = topP.getCoor(); //Gets current top
+        topP = topP.getNext(); //New top is old tops pointer
+        System.out.println("pPop: "+topP.getCoor());
         return coor;
     }
     
     public void look()
-    {
+    {   
         Point moveTo = new Point(0,0);
         
-        //Check north
-        if(tileValid(location.x, location.y-1)){
-              if(moveTo.equals(new Point (0,0))){
-                moveTo = new Point(0,-1);
-            }
-            else{
-                Cpush(new Point(location.x,location.y));
-            }
-        }
-        //Check East
-        if(location.x+1 <= 11 && maze.grid[location.x+1][location.y].getState() == 0){
-              if(moveTo.equals(new Point (0,0))){
-                moveTo = new Point(1,0);
-            }
-            else{
-                Cpush(new Point(location.x,location.y));
-            }
-        }
-        //Check South
-        if(location.y+1 <= 11 && maze.grid[location.x][location.y+1].getState() == 0){
-              if(moveTo.equals(new Point (0,0))){
-                moveTo = new Point(0,1);
-            }
-            else{
-                Cpush(new Point(location.x,location.y));
-            }
-        }
-        //Check West
-        if(location.x-1 >= 0 &&maze.grid[location.x-1][location.y].getState() == 0){
-              if(moveTo.equals(new Point (0,0))){
-                moveTo = new Point(-1,0);
-            }
-            else{
-                Cpush(new Point(location.x,location.y));
-            }
-        }
-        maze.grid[location.x][location.y].setState(1);
-        move(moveTo);
-        
-        if(moveTo.equals(new Point(0,0))){
-            setLocation(cPop());
-            //backtrack();
-        }
-        
-        
-    }
+        if(!backtrack){
     
-    private boolean tileValid(int x, int y){
+            //Check north
+            if(tileValid(location.x, location.y-1)){
+                  if(moveTo.equals(new Point (0,0))){
+                    moveTo = new Point(0,-1);
+                }
+                else{
+                    cPush(new Point(location.x,location.y));
+                }
+            }
+            //Check East
+            if(location.x+1 <= 11 && maze.grid[location.x+1][location.y].getState() == 0){
+                  if(moveTo.equals(new Point (0,0))){
+                    moveTo = new Point(1,0);
+                }
+                else{
+                    cPush(new Point(location.x,location.y));
+                }
+            }
+            //Check South
+            if(location.y+1 <= 11 && maze.grid[location.x][location.y+1].getState() == 0){
+                  if(moveTo.equals(new Point (0,0))){
+                    moveTo = new Point(0,1);
+                }
+                else{
+                    cPush(new Point(location.x,location.y));
+                }
+            }
+            //Check West
+            if(location.x-1 >= 0 &&maze.grid[location.x-1][location.y].getState() == 0){
+                  if(moveTo.equals(new Point (0,0))){
+                    moveTo = new Point(-1,0);
+                }
+                else{
+                    cPush(new Point(location.x,location.y));
+                }
+            }
+            maze.grid[location.x][location.y].setState(1);
+            System.out.println("Ranger Spot: "+location);
+            if(!moveTo.equals(new Point(0,0))){pPush(location);}//Add location to path stack
+            System.out.println("Current Path top: "+topP.getCoor()); 
+            move(moveTo);
+            
+        }
+        //System.out.println("Current Path top: "+topP.getCoor()); 
+        
+        
+        //dead end
+        if(moveTo.equals(new Point(0,0))){
+            System.out.println("Current Path top: "+topP.getCoor());
+            backtrack = true;
+            System.out.println("Backtrack now");
+            
+            setLocation(pPop());
+            //backtrack();
+            
+        }
+        maze.repaint();
+        int nope =0;
+        }
+    
+        private boolean tileValid(int x, int y){
         return x>=0 && y>=0 && x<=11 && y<=11 && maze.grid[x][y].getState() != 4 
                 && maze.grid[x][y].getState() != 1;
     }
     
     private void backtrack()
     {
-        if(!topP.getCoor().equals(topC.getCoor())){
-             setLocation(pPop());
-        }
+        
     }
 }
