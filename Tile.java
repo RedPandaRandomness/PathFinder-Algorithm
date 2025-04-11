@@ -15,12 +15,11 @@ public class Tile extends Rectangle
     public static final int HEIGHT = 50;
     public Color colour;
     private int state = 0;
-    /* 0 = unvisited, unmarked
-     * 1 = unvisited, marked
-     * 2 = visited, unmarked
-     * 3 = visited, marked <- impossible?
-     * 4 = tree (ignore)
-     * 5 = house
+    /* 0 = Blank (unvisited)
+     * 1 = Visited
+     * 2 = Crossed off
+     * 3 = tree (ignore)
+     * 4 = house
      */
     
     /**
@@ -44,32 +43,27 @@ public class Tile extends Rectangle
     
     public void setState(int state)
     {
-        if(state == 0) // unvisited, unmarked
+        if(state == 0) // Blank, not visited
         {
             colour = new Color(255,255,255); // white
             this.state = state;
         }
-        else if(state == 1) // unvisited, marked
+        else if(state == 1) // Visited
         {
-            colour = new Color(255,0,0); // red
+            colour = new Color(0,255,0); // Green
             this.state = state;
         }
-        else if(state == 2) // visited, unmarked
+        else if(state == 2) // Crossed off
         {
-            colour = new Color(0,255,0);
+            colour = new Color(255,0,0); // Red
             this.state = state;
         }
-        else if(state == 3) //# visited, marked
-        {
-            colour = new Color(200,0,255);
-            this.state = state;
-        }
-        else if(state == 4) // tree
+        else if(state == 3) // tree
         {
             colour = new Color(0,0,0); // black
             this.state = state;
         }
-        else if(state == 5) // House
+        else if(state == 4) // House
         {
             colour = new Color(0,0,0); // black
             this.state = state;
