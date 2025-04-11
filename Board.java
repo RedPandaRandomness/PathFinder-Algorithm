@@ -29,7 +29,7 @@ public class Board extends JPanel
     private boolean houseFound = false;
     
     Timer timer;
-    int speed = 500;
+    int speed = 50;
 
     public static int i = 0;
     /**
@@ -58,6 +58,7 @@ public class Board extends JPanel
             }
         }
         setBoard(0); // asks for value 0-2
+        grid[11][11].setState(5);
         
         findPath();
     }
@@ -91,7 +92,7 @@ public class Board extends JPanel
                 rangerBrush.paintIcon(this,g,
                 him.location.x*50,him.location.y*50);
                 
-                    if(grid[i][j].getState() == 5){
+                    if(grid[i][j].getState() == 3){
                     ImageIcon brush = house;
 
                     brush.paintIcon(this,g,
@@ -102,6 +103,7 @@ public class Board extends JPanel
     }
 
     public void findPath(){
+        out.println(grid[11][11].getState());
         
         //Delay before turning cards over automatically
         timer = new Timer(speed,new ActionListener(){
@@ -109,7 +111,7 @@ public class Board extends JPanel
                 if(!houseFound){him.look();}
                 
                 repaint();
-                if(grid[him.location.x][him.location.y].getState() == 5){
+                if(grid[him.location.x][him.location.y].getState() == 3){
                     houseFound = true;
                 }
                 //int nope =0;
@@ -202,7 +204,7 @@ public class Board extends JPanel
             grid[7][11].setState(4);
             grid[9][11].setState(4);
             grid[10][11].setState(4);
-            grid[11][11].setState(5);
+            grid[11][11].setState(3);
         }
         else if(mazeType == 1)
         {
@@ -283,7 +285,7 @@ public class Board extends JPanel
             grid[5][11].setState(4);
             grid[8][11].setState(4);
             grid[10][11].setState(4);
-            grid[11][11].setState(5);
+            grid[11][11].setState(3);
         }
         else if(mazeType == 2)
         {
