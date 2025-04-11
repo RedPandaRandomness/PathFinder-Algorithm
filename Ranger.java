@@ -124,12 +124,10 @@ public class Ranger
                 }
             }
             maze.grid[location.x][location.y].setState(1);
-            System.out.println("Moving: "+moveTo);
             if(!moveTo.equals(new Point(0,0))){pPush(location);}//Add location to path stack
             move(moveTo);
             
         }
-        //System.out.println("Current Path top: "+topP.getCoor()); 
         
         
         //dead end
@@ -144,10 +142,9 @@ public class Ranger
         }
     
         private boolean tileValid(int x, int y){
-            if(x>=0 && x<=11 && y>=0 && y<=11 &&
-                maze.grid[x][y].getState() == 0 && 
-                maze.grid[x][y].getState() != 5){
-                System.out.println("Tile state: "+maze.grid[x][y].getState());
+            if(x>=0 && x<=11 && y>=0 && y<=11 &&(
+                maze.grid[x][y].getState() == 0 || 
+                maze.grid[x][y].getState() == 3)){
                 return true;
             }
             else{
