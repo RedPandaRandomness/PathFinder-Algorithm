@@ -24,10 +24,12 @@ public class Board extends JPanel
     public static final int HEIGHT = 600;
     Tile[][] grid = new Tile[12][12];
     ImageIcon house = new ImageIcon("Sprites/drhouse.jpg");
-    ImageIcon ranger = new ImageIcon("Sprites/rangerkirby.png");
+    ImageIcon ranger = new ImageIcon("Sprites/Ranger/south.png");
     Ranger him;
+    private boolean houseFound = false;
     
     Timer timer;
+    int speed = 500;
 
     public static int i = 0;
     /**
@@ -81,62 +83,40 @@ public class Board extends JPanel
                 outline.setColor(Color.gray);
                 outline.setStroke(new BasicStroke(3));
                 outline.drawRect(grid[i][j].x,grid[i][j].y,
-                    grid[i][j].width,grid[i][j].height);
-
-                //print house
-                if(grid[i][j].getState() == 5){
+                grid[i][j].width,grid[i][j].height);
+                    
+                //Draw Ranger
+                ImageIcon rangerBrush = ranger;
+        
+                rangerBrush.paintIcon(this,g,
+                him.location.x*50,him.location.y*50);
+                
+                    if(grid[i][j].getState() == 5){
                     ImageIcon brush = house;
 
                     brush.paintIcon(this,g,
                         grid[i][j].x,grid[i][j].y);
                 }
-
-            }
+            }   
         }
-
-        ImageIcon rangerBrush = ranger;
-        
-        rangerBrush.paintIcon(this,g,
-            him.location.x*50,him.location.y*50);
-
     }
 
     public void findPath(){
         
         //Delay before turning cards over automatically
-        timer = new Timer(500,new ActionListener(){
+        timer = new Timer(speed,new ActionListener(){
                 public void actionPerformed(ActionEvent evt){
-                him.look();
+                if(!houseFound){him.look();}
                 
                 repaint();
+                if(grid[him.location.x][him.location.y].getState() == 5){
+                    houseFound = true;
+                }
                 //int nope =0;
             }
         });
 
         timer.start();
-        
-        /*MANUAL PUSH/POP
-        timer = new Timer(1000,new ActionListener(){
-                public void actionPerformed(ActionEvent evt){
-                //him.look();
-                if(i == 0)him.pPush(new Point(0,1));
-                if(i == 1)him.pPush(new Point(1,1));
-                if(i == 2)him.pPush(new Point(1,2));
-                else if(i>2 && i<5) him.pPop();
-                
-                
-                
-                repaint();
-                i++;
-            }
-        });
-
-        //timer.setRepeats(false);
-        timer.start();
-        */
-        
-        
-       
     }
 
     public void setBoard(int mazeType)
