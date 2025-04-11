@@ -145,8 +145,8 @@ public class Ranger
     
         private boolean tileValid(int x, int y){
             if(x>=0 && x<=11 && y>=0 && y<=11 &&
-                maze.grid[x][y].getState() != 1 && 
-                maze.grid[x][y].getState() != 4){
+                maze.grid[x][y].getState() == 0 && 
+                maze.grid[x][y].getState() != 5){
                 System.out.println("Tile state: "+maze.grid[x][y].getState());
                 return true;
             }
@@ -163,6 +163,8 @@ public class Ranger
         }
         else{
             setLocation(pPop());
+            //Mark tile off path
+            maze.grid[location.x][location.y].setState(2);
         }
         
     }
