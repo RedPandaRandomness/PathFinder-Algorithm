@@ -97,7 +97,7 @@ public class Ranger
                 }
             }
             //Check East
-            if(location.x+1 <= 11 && maze.grid[location.x+1][location.y].getState() == 0){
+            if(tileValid(location.x+1, location.y)){
                   if(moveTo.equals(new Point (0,0))){
                     moveTo = new Point(1,0);
                 }
@@ -106,7 +106,7 @@ public class Ranger
                 }
             }
             //Check South
-            if(location.y+1 <= 11 && maze.grid[location.x][location.y+1].getState() == 0){
+            if(tileValid(location.x, location.y+1)){
                   if(moveTo.equals(new Point (0,0))){
                     moveTo = new Point(0,1);
                 }
@@ -115,7 +115,7 @@ public class Ranger
                 }
             }
             //Check West
-            if(location.x-1 >= 0 &&maze.grid[location.x-1][location.y].getState() == 0){
+            if(tileValid(location.x-1, location.y)){
                   if(moveTo.equals(new Point (0,0))){
                     moveTo = new Point(-1,0);
                 }
@@ -145,8 +145,9 @@ public class Ranger
     
         private boolean tileValid(int x, int y){
             if(x>=0 && x<=11 && y>=0 && y<=11 &&
-                maze.grid[x][y].getState() != 1 &&
+                maze.grid[x][y].getState() != 1 && 
                 maze.grid[x][y].getState() != 4){
+                System.out.println("Tile state: "+maze.grid[x][y].getState());
                 return true;
             }
             else{
