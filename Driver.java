@@ -26,6 +26,7 @@ public class Driver
         //Makes new game board
         maze = new Board();
         him = new Ranger(maze);
+        maze.sendRanger(him);
         
         frame.getContentPane().add(maze);
         frame.pack();
