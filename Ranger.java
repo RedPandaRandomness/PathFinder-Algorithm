@@ -126,19 +126,19 @@ public class Ranger
             maze.grid[location.x][location.y].setState(1);
             if(!moveTo.equals(new Point(0,0))){pPush(location);}//Add location to path stack
             move(moveTo);
-            
         }
         
         
         //dead end
         if(moveTo.equals(new Point(0,0))){
             backtrack = true;
+            maze.grid[location.x][location.y].setState(2);
             System.out.println("Backtrack now");
             backtrack();
             
+            
         }
         maze.repaint();
-        int nope =0;
         }
     
         private boolean tileValid(int x, int y){
@@ -151,17 +151,18 @@ public class Ranger
                 return false;
             }
     }
-    
+
     private void backtrack()
     {
-        if(location.equals(topC.getCoor())){
+        if(location.equals(topC.getCoor())){ //If at crossroad
+            //Stop backtracking
             cPop();
             backtrack = false;
+            maze.grid[location.x][location.y].setState(1);
         }
         else{
+            //Go back to the next tile
             setLocation(pPop());
-            //Mark tile off path
-            maze.grid[location.x][location.y].setState(2);
         }
         
     }
