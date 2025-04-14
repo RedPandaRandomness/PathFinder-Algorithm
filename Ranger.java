@@ -14,6 +14,7 @@ public class Ranger
     ToCheckNode topC = new ToCheckNode();
     PathNode topP = new PathNode();
     private boolean backtrack = false;
+    int face = 2;
 
     /**
      * Constructor for objects of class Ranger
@@ -23,6 +24,11 @@ public class Ranger
         location = new Point(0,0);
         maze = board;
         
+    }
+    
+    public int getFacing()
+    {
+        return face;
     }
     
     public Point getLocation()
@@ -91,6 +97,7 @@ public class Ranger
             if(tileValid(location.x, location.y-1)){
                   if(moveTo.equals(new Point (0,0))){
                     moveTo = new Point(0,-1);
+                    face = 0;
                 }
                 else{
                     cPush(new Point(location.x,location.y));
@@ -100,6 +107,7 @@ public class Ranger
             if(tileValid(location.x+1, location.y)){
                   if(moveTo.equals(new Point (0,0))){
                     moveTo = new Point(1,0);
+                    face = 1;
                 }
                 else{
                     cPush(new Point(location.x,location.y));
@@ -109,6 +117,7 @@ public class Ranger
             if(tileValid(location.x, location.y+1)){
                   if(moveTo.equals(new Point (0,0))){
                     moveTo = new Point(0,1);
+                    face = 2;
                 }
                 else{
                     cPush(new Point(location.x,location.y));
@@ -118,6 +127,7 @@ public class Ranger
             if(tileValid(location.x-1, location.y)){
                   if(moveTo.equals(new Point (0,0))){
                     moveTo = new Point(-1,0);
+                    face = 3;
                 }
                 else{
                     cPush(new Point(location.x,location.y));
