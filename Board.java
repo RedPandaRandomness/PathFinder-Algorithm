@@ -25,7 +25,7 @@ public class Board extends JPanel
     public static final int HEIGHT = 600;
     Tile[][] grid = new Tile[12][12];
     ImageIcon house = new ImageIcon("Sprites/drhouse.jpg");
-    ImageIcon ranger = new ImageIcon("Sprites/Ranger/south.png");
+    ImageIcon[] rangers = new ImageIcon[4];
     Ranger him;
     private boolean houseFound = false;
     Random rng = new Random();
@@ -47,6 +47,11 @@ public class Board extends JPanel
         if(timer!= null && timer.isRunning()){
             timer.stop();
         }
+        
+        rangers[0] = new ImageIcon("Sprites/Ranger/north.png");
+        rangers[1] = new ImageIcon("Sprites/Ranger/east.png");
+        rangers[2] = new ImageIcon("Sprites/Ranger/south.png");
+        rangers[3] = new ImageIcon("Sprites/Ranger/west.png");
         
         main();
     }
@@ -89,7 +94,7 @@ public class Board extends JPanel
                 grid[i][j].width,grid[i][j].height);
                     
                 //Draw Ranger
-                ImageIcon rangerBrush = ranger;
+                ImageIcon rangerBrush = rangers[him.getFacing()];
         
                 rangerBrush.paintIcon(this,g,
                 him.location.x*50,him.location.y*50);
