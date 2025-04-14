@@ -10,6 +10,7 @@ import javax.swing.Timer;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.Point;
+import java.util.Random;
 
 /**
  * Write a description of class Board here.
@@ -27,9 +28,10 @@ public class Board extends JPanel
     ImageIcon ranger = new ImageIcon("Sprites/Ranger/south.png");
     Ranger him;
     private boolean houseFound = false;
+    Random rng = new Random();
     
     Timer timer;
-    int speed = 50;
+    int speed = 300;
 
     public static int i = 0;
     /**
@@ -57,7 +59,7 @@ public class Board extends JPanel
                 grid[i][j] = new Tile(i*50,j*50);
             }
         }
-        setBoard(0); // asks for value 0-2
+        setBoard(rng.nextInt(2)); // asks for value 0-2
         grid[11][11].setState(5);
         
         findPath();
