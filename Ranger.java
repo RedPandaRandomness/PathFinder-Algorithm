@@ -14,7 +14,7 @@ public class Ranger
     ToCheckNode topC = new ToCheckNode();
     PathNode topP = new PathNode();
     private boolean backtrack = false;
-    int face = 2;
+    private int face = 2;
 
     /**
      * Constructor for objects of class Ranger
