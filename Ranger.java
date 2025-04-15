@@ -87,6 +87,10 @@ public class Ranger
         return coor;
     }
     
+    public Point getDist(Point a){
+        return new Point (a.x - location.x, a.y - location.y);
+    }
+    
     public void look()
     {   
         Point moveTo = new Point(0,0);
@@ -138,16 +142,14 @@ public class Ranger
             move(moveTo);
         }
         
-        
         //dead end
         if(moveTo.equals(new Point(0,0))){
             backtrack = true;
             maze.grid[location.x][location.y].setState(2);
-            System.out.println("Backtrack now");
+            //System.out.println("Backtrack now");
             backtrack();
-            
-            
         }
+        
         maze.repaint();
         }
     
@@ -172,6 +174,12 @@ public class Ranger
         }
         else{
             //Go back to the next tile
+            Point direction = getDist(topP.getCoor());
+            if(direction.y == -1){face = 0;}
+            else if(direction.x == 1){face = 1;}
+            else if(direction.y == 1){face = 2;}
+            else if(direction.x == -1){face = 3;}
+            
             setLocation(pPop());
         }
         
