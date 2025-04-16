@@ -110,9 +110,6 @@ public class Board extends JPanel
     }
 
     public void findPath(){
-        out.println(grid[11][11].getState());
-        
-        //Delay before turning cards over automatically
         timer = new Timer(speed,new ActionListener(){
                 public void actionPerformed(ActionEvent evt){
                 if(!houseFound){him.look();}
