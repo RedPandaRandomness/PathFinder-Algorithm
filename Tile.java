@@ -45,27 +45,27 @@ public class Tile extends Rectangle
     {
         if(state == 0) // Blank, not visited
         {
-            colour = new Color(135,217,98); // green 
+            colour = new Color(135,217,98); // grassy 
             this.state = state;
         }
         else if(state == 1) // Visited
         {
-            colour = new Color(0,255,0); // Green
+            colour = new Color(84,62,38); // path
             this.state = state;
         }
         else if(state == 2) // Crossed off
         {
-            colour = new Color(255,0,0); // Red
+            colour = new Color(179,242,150); // lighter grassy
             this.state = state;
         }
-        else if(state == 3) // tree
+        else if(state == 3) // house?
         {
-            colour = new Color(0,0,0); // black
+            colour = new Color(135,217,98); // grassy
             this.state = state;
         }
-        else if(state == 4) // House
+        else if(state == 4) // tree?
         {
-            colour = new Color(0,0,0); // black
+            colour = new Color(85,177,58); // darker grassy
             this.state = state;
         }
     }
