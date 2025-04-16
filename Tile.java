@@ -45,7 +45,7 @@ public class Tile extends Rectangle
     {
         if(state == 0) // Blank, not visited
         {
-            colour = new Color(255,255,255); // white
+            colour = new Color(135,217,98); // green 
             this.state = state;
         }
         else if(state == 1) // Visited
