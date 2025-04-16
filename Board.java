@@ -24,12 +24,14 @@ public class Board extends JPanel
     public static final int WIDTH = 600;
     public static final int HEIGHT = 600;
     Tile[][] grid = new Tile[12][12];
-    ImageIcon house = new ImageIcon("Sprites/drhouse.jpg");
+    ImageIcon house = new ImageIcon("Sprites/cabin.png");
+    ImageIcon tree = new ImageIcon("Sprites/tree.png");
     ImageIcon[] rangers = new ImageIcon[4];
     Ranger him;
     private boolean houseFound = false;
     Random rng = new Random();
-    
+    private Color line;
+
     Timer timer;
     int speed = 300;
 
@@ -47,12 +49,12 @@ public class Board extends JPanel
         if(timer!= null && timer.isRunning()){
             timer.stop();
         }
-        
+
         rangers[0] = new ImageIcon("Sprites/Ranger/north.png");
         rangers[1] = new ImageIcon("Sprites/Ranger/east.png");
         rangers[2] = new ImageIcon("Sprites/Ranger/south.png");
         rangers[3] = new ImageIcon("Sprites/Ranger/west.png");
-        
+
         main();
     }
 
@@ -65,8 +67,8 @@ public class Board extends JPanel
             }
         }
         setBoard(rng.nextInt(2)); // asks for value 0-2
-        grid[11][11].setState(5);
-        
+        //grid[11][11].setState(5);
+
         findPath();
     }
 
@@ -86,21 +88,29 @@ public class Board extends JPanel
                 g.setColor(grid[i][j].colour);
                 g.fillRect(grid[i][j].x,grid[i][j].y,
                     grid[i][j].width,grid[i][j].height);
-
+                
                 //Draw outline
-                outline.setColor(Color.gray);
+                
+                line = new Color(60, 110, 45);
+                outline.setColor(line);
                 outline.setStroke(new BasicStroke(3));
                 outline.drawRect(grid[i][j].x,grid[i][j].y,
                 grid[i][j].width,grid[i][j].height);
-                    
+
                 //Draw Ranger
                 ImageIcon rangerBrush = rangers[him.getFacing()];
-        
+
                 rangerBrush.paintIcon(this,g,
-                him.location.x*50,him.location.y*50);
-                
-                    if(grid[i][j].getState() == 3){
+                    him.location.x*50,him.location.y*50);
+
+                if(grid[i][j].getState() == 3){
                     ImageIcon brush = house;
+
+                    brush.paintIcon(this,g,
+                        grid[i][j].x,grid[i][j].y);
+                }
+                if(grid[i][j].getState() == 4){
+                    ImageIcon brush = tree;
 
                     brush.paintIcon(this,g,
                         grid[i][j].x,grid[i][j].y);
@@ -112,15 +122,15 @@ public class Board extends JPanel
     public void findPath(){
         timer = new Timer(speed,new ActionListener(){
                 public void actionPerformed(ActionEvent evt){
-                if(!houseFound){him.look();}
-                
-                repaint();
-                if(grid[him.location.x][him.location.y].getState() == 3){
-                    houseFound = true;
+                    if(!houseFound){him.look();}
+
+                    repaint();
+                    if(grid[him.location.x][him.location.y].getState() == 3){
+                        houseFound = true;
+                    }
+                    //int nope =0;
                 }
-                //int nope =0;
-            }
-        });
+            });
 
         timer.start();
     }
