@@ -50,6 +50,11 @@ public class Ranger
         this.location = location;
     }
     
+    public void setLocation(int x, int y)
+    {
+        location = new Point(x,y);
+    }
+    
     public void move(Point move)
     {
         location = new Point(location.x+move.x, location.y+move.y);
@@ -75,6 +80,10 @@ public class Ranger
         Point coor = topC.getCoor();//Get coordinate of current top
         topC = topC.getNext();
         return coor;
+    }
+    
+    private boolean cIsEmpty(){
+        return (topC == null);
     }
     
     public Point pPop(){
@@ -168,9 +177,11 @@ public class Ranger
     {
         if(location.equals(topC.getCoor())){ //If at crossroad
             //Stop backtracking
-            cPop();
-            backtrack = false;
-            maze.grid[location.x][location.y].setState(1);
+            if(!cIsEmpty()){
+                cPop();
+                backtrack = false;
+                maze.grid[location.x][location.y].setState(1);
+            }
         }
         else{
             //Go back to the next tile
