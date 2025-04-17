@@ -11,6 +11,9 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.Point;
 import java.util.Random;
+import java.io.IOException;
+import java.util.Scanner;
+import java.io.File;
 
 /**
  * Write a description of class Board here.
@@ -23,19 +26,22 @@ public class Board extends JPanel
     // instance variables
     public static final int WIDTH = 600;
     public static final int HEIGHT = 600;
-    Tile[][] grid = new Tile[12][12];
-    ImageIcon house = new ImageIcon("Sprites/cabin.png");
-    ImageIcon tree = new ImageIcon("Sprites/tree.png");
-    ImageIcon[] rangers = new ImageIcon[4];
-    Ranger him;
-    private boolean houseFound = false;
-    Random rng = new Random();
+    public Tile[][] grid = new Tile[12][12];
+    private ImageIcon house = new ImageIcon("Sprites/cabin.png");
+    private ImageIcon tree = new ImageIcon("Sprites/tree.png");
+    private ImageIcon[] rangers = new ImageIcon[4];
+    private Ranger him;
+    public boolean houseFound;
+    private Random rng = new Random();
     private Color line;
-
+    private File file = new File("Board/map.txt");
+    private Scanner map;
+    private String[] mapA = new String[12];
+    private Point rangerStartPos;
+    
     Timer timer;
-    int speed = 300;
+    private int speed = 300;
 
-    public static int i = 0;
     /**
      * Constructor for objects of class Board
      */
@@ -49,12 +55,12 @@ public class Board extends JPanel
         if(timer!= null && timer.isRunning()){
             timer.stop();
         }
-
+        
         rangers[0] = new ImageIcon("Sprites/Ranger/north.png");
         rangers[1] = new ImageIcon("Sprites/Ranger/east.png");
         rangers[2] = new ImageIcon("Sprites/Ranger/south.png");
         rangers[3] = new ImageIcon("Sprites/Ranger/west.png");
-
+        
         main();
     }
 
@@ -66,15 +72,55 @@ public class Board extends JPanel
                 grid[i][j] = new Tile(i*50,j*50);
             }
         }
-        setBoard(rng.nextInt(2)); // asks for value 0-2
-        //grid[11][11].setState(5);
-
+        
+        try{
+            out.println("Trying makeMap");
+            makeMap();
+        }
+        catch(Exception e){
+            out.println("Nope");
+            
+            setBoard(rng.nextInt(2)); // asks for value 0-2
+        }
+        
         findPath();
+    }
+    
+    public void makeMap() throws IOException
+    {
+        //him.setLocation(0,1);
+        map = new Scanner(file);
+        
+        //sets map string
+        int temp = 0;
+        while(map.hasNextLine() )
+        {
+            mapA[temp] = map.nextLine();
+            //out.println(mapA[temp]);
+            temp++;
+        }
+        
+        out.println();
+        for(int x = 0; x<grid.length; x++){
+            for(int y = 0; y<grid[x].length; y++){
+                if(mapA[y].charAt(x) == '#'){
+                    grid[x][y].setState(4);
+                }
+                if(mapA[y].charAt(x) == 'H'){
+                    grid[x][y].setState(3);
+                }
+                if(mapA[y].charAt(x) == 'R'){
+                    rangerStartPos = new Point (x,y);
+                }
+            }
+        }
     }
 
     public void sendRanger(Ranger ranger){
         him = ranger;
+        him.setLocation(rangerStartPos);      
     }
+    
 
     public void paintComponent(Graphics g)
     {
@@ -84,13 +130,12 @@ public class Board extends JPanel
 
         for(int i = 0; i<grid.length; i++){
             for(int j = 0; j<grid[i].length; j++){
-                //Draw fill
+                 //Draw fill
                 g.setColor(grid[i][j].colour);
                 g.fillRect(grid[i][j].x,grid[i][j].y,
                     grid[i][j].width,grid[i][j].height);
                 
                 //Draw outline
-                
                 line = new Color(60, 110, 45);
                 outline.setColor(line);
                 outline.setStroke(new BasicStroke(3));
@@ -120,17 +165,18 @@ public class Board extends JPanel
     }
 
     public void findPath(){
+        
         timer = new Timer(speed,new ActionListener(){
                 public void actionPerformed(ActionEvent evt){
-                    if(!houseFound){him.look();}
-
-                    repaint();
-                    if(grid[him.location.x][him.location.y].getState() == 3){
-                        houseFound = true;
-                    }
-                    //int nope =0;
+                if(!houseFound){him.look();}
+                
+                repaint();
+                if(grid[him.location.x][him.location.y].getState() == 3){
+                    houseFound = true;
                 }
-            });
+                //int nope =0;
+            }
+        });
 
         timer.start();
     }
@@ -311,7 +357,7 @@ public class Board extends JPanel
             {
                 for(int j = 0; j < 12; j++)
                 {
-                    grid[i][j].setState(5);
+                    grid[i][j].setState(3);
                 }
             }
         }
