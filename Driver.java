@@ -1,4 +1,9 @@
 import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.JButton;
+import java.awt.event.ActionEvent;
+import java.awt.BorderLayout;
+import java.awt.event.ActionListener;
 
 /**
  * Write a description of class Driver here.
@@ -8,7 +13,7 @@ import javax.swing.JFrame;
  */
 public class Driver
 {
-    // instance variables - replace the example below with your own
+    // instance variables 
     public Board maze;
     public Ranger him;
 
@@ -18,19 +23,35 @@ public class Driver
     
     public Driver()
     {
-        // Setup the environment for drawing
-        JFrame frame = new JFrame();
-        frame.setTitle("PatherFinder Algorithm");
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        // Make the main frame for the board
+        JFrame board = new JFrame();
+        board.setTitle("PatherFinder Algorithm");
+        board.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         
-        //Makes new game board
+        //Make panel for buttons, then add them to it
+        JPanel buttonPanel = new JPanel();
+        JButton speed = new JButton("Caffeine mode");
+        JButton editor = new JButton("Edit maze");
+        JButton start = new JButton("Send ranger");
+        
+        buttonPanel.add(speed);
+        buttonPanel.add(editor);
+        buttonPanel.add(start);
+        
+        
+        //Make objects for game
         maze = new Board();
         him = new Ranger(maze);
         maze.sendRanger(him);
         
-        frame.getContentPane().add(maze);
-        frame.pack();
-        frame.setVisible(true);
+        speed.addActionListener(maze);
+        editor.addActionListener(maze);
+        start.addActionListener(maze);
+        
+        board.getContentPane().add(buttonPanel,BorderLayout.SOUTH);
+        board.getContentPane().add(maze);
+        board.pack();
+        board.setVisible(true);
 
     }
 
