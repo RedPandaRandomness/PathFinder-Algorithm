@@ -14,6 +14,10 @@ import java.util.Random;
 import java.io.IOException;
 import java.util.Scanner;
 import java.io.File;
+import javax.swing.JFrame;
+import javax.swing.JButton;
+import java.awt.BorderLayout;
+
 
 /**
  * Write a description of class Board here.
@@ -21,7 +25,7 @@ import java.io.File;
  * @author (Lora & Benj)
  * @version (a version number or a date)
  */
-public class Board extends JPanel
+public class Board extends JPanel implements ActionListener
 {
     // instance variables
     public static final int WIDTH = 600;
@@ -40,7 +44,8 @@ public class Board extends JPanel
     private Point rangerStartPos;
     
     Timer timer;
-    private int speed = 300;
+    public int speed = 300;
+    private boolean caffeine = false;
 
     /**
      * Constructor for objects of class Board
@@ -74,16 +79,11 @@ public class Board extends JPanel
         }
         
         try{
-            out.println("Trying makeMap");
             makeMap();
         }
         catch(Exception e){
-            out.println("Nope");
-            
             setBoard(rng.nextInt(2)); // asks for value 0-2
         }
-        
-        findPath();
     }
     
     public void makeMap() throws IOException
@@ -165,7 +165,6 @@ public class Board extends JPanel
     }
 
     public void findPath(){
-        
         timer = new Timer(speed,new ActionListener(){
                 public void actionPerformed(ActionEvent evt){
                 if(!houseFound){him.look();}
@@ -179,6 +178,49 @@ public class Board extends JPanel
         });
 
         timer.start();
+    }
+    
+     public void actionPerformed(ActionEvent e)
+    {
+        if(e.getActionCommand().equals("Caffeine mode")){
+            caffeine = !caffeine;
+            if(caffeine){
+                timer.setDelay(50);
+                timer.restart();
+            }
+            else{
+                timer.setDelay(speed);
+                timer.restart();
+            }
+        }
+        else if(e.getActionCommand().equals("Send ranger")){
+            findPath();            
+        }
+        else if(e.getActionCommand().equals("Edit maze")){
+            JFrame editor = new JFrame();
+            editor.setTitle("Maze Editor");
+            editor.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+            
+            BoardEditor editPane= new BoardEditor(grid);
+            
+            JPanel buttonPanel = new JPanel();
+            JButton tree = new JButton("Tree");
+            JButton ranger = new JButton("Ranger");
+            JButton cabin = new JButton("Cabin");
+            JButton eraser = new JButton("Eraser");
+        
+            buttonPanel.add(tree);
+            buttonPanel.add(ranger);
+            buttonPanel.add(cabin);
+            buttonPanel.add(eraser);
+            
+            
+            editor.getContentPane().add(buttonPanel,BorderLayout.SOUTH);
+            editor.getContentPane().add(editPane);
+            editor.pack();
+            editor.setVisible(true);
+        }
+        
     }
 
     public void setBoard(int mazeType)
