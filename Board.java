@@ -17,6 +17,8 @@ import java.io.File;
 import javax.swing.JFrame;
 import javax.swing.JButton;
 import java.awt.BorderLayout;
+import java.awt.GridLayout;
+import java.awt.Container;
 
 
 /**
@@ -41,7 +43,7 @@ public class Board extends JPanel implements ActionListener
     private File file = new File("Board/map.txt");
     private Scanner map;
     private String[] mapA = new String[12];
-    private Point rangerStartPos;
+    public Point rangerStartPos;
     
     Timer timer;
     public int speed = 300;
@@ -88,7 +90,6 @@ public class Board extends JPanel implements ActionListener
     
     public void makeMap() throws IOException
     {
-        //him.setLocation(0,1);
         map = new Scanner(file);
         
         //sets map string
@@ -96,11 +97,9 @@ public class Board extends JPanel implements ActionListener
         while(map.hasNextLine() )
         {
             mapA[temp] = map.nextLine();
-            //out.println(mapA[temp]);
             temp++;
         }
-        
-        out.println();
+    
         for(int x = 0; x<grid.length; x++){
             for(int y = 0; y<grid[x].length; y++){
                 if(mapA[y].charAt(x) == '#'){
@@ -118,7 +117,7 @@ public class Board extends JPanel implements ActionListener
 
     public void sendRanger(Ranger ranger){
         him = ranger;
-        him.setLocation(rangerStartPos);      
+        him.setLocation(rangerStartPos);     
     }
     
 
@@ -199,28 +198,31 @@ public class Board extends JPanel implements ActionListener
         else if(e.getActionCommand().equals("Edit maze")){
             JFrame editor = new JFrame();
             editor.setTitle("Maze Editor");
-            editor.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
             
-            BoardEditor editPane= new BoardEditor(grid);
+            BoardEditor editPane= new BoardEditor(grid, this);
+            editPane.sendRanger(him);
             
             JPanel buttonPanel = new JPanel();
             JButton tree = new JButton("Tree");
             JButton ranger = new JButton("Ranger");
             JButton cabin = new JButton("Cabin");
             JButton eraser = new JButton("Eraser");
-        
+            
             buttonPanel.add(tree);
             buttonPanel.add(ranger);
             buttonPanel.add(cabin);
             buttonPanel.add(eraser);
             
+            tree.addActionListener(editPane);
+            ranger.addActionListener(editPane);
+            cabin.addActionListener(editPane);
+            eraser.addActionListener(editPane);
             
             editor.getContentPane().add(buttonPanel,BorderLayout.SOUTH);
             editor.getContentPane().add(editPane);
             editor.pack();
             editor.setVisible(true);
         }
-        
     }
 
     public void setBoard(int mazeType)
