@@ -7,6 +7,8 @@ import java.awt.event.MouseListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import javax.swing.Icon;
+import javax.swing.JButton;
 
 
 /**
@@ -25,7 +27,16 @@ public class BoardEditor extends Board implements MouseListener, ActionListener
     private ImageIcon house = new ImageIcon("Sprites/cabin.png");
     private ImageIcon tree = new ImageIcon("Sprites/tree.png");
     private ImageIcon ranger = new ImageIcon("Sprites/Ranger/south.png");
+    private Icon Tree; 
+    private Icon Ranger; 
+    private Icon Eraser; 
+    private Icon Cabin; 
     private Ranger her;
+    
+    private JButton btnTree; 
+    private JButton btnCabin; 
+    private JButton btnEraser; 
+    private JButton btnRanger; 
     
     public BoardEditor(Tile[][] grid, Board board)
     {
@@ -39,17 +50,21 @@ public class BoardEditor extends Board implements MouseListener, ActionListener
         her.setLocation(rangerStartPos);
     }
     
+    
+    public void sendBtn(JButton a,JButton b, JButton c, JButton d ){
+        btnTree = a;
+        btnRanger = b;
+        btnCabin = c; 
+        btnEraser = d;
+    }
+    
+    
     public void actionPerformed(ActionEvent e)
     {
-        if(e.getActionCommand().equals("Tree")){
-            state = 4;}
-        else if(e.getActionCommand().equals("Eraser")){state = 0;}
-        else if(e.getActionCommand().equals("Ranger")){state = 1;}
-        else if(e.getActionCommand().equals("Cabin")){state = 3;}
-        else if(e.getActionCommand().equals("Save Changes")){
-            ogBoard.repaint();
-        }
-        
+        if(e.getSource().equals(btnTree)){state = 4;}
+        else if(e.getSource().equals(btnEraser)){state = 0;}
+        else if(e.getSource().equals(btnRanger)){state = 1;}
+        else if(e.getSource().equals(btnCabin)){state = 3;}
     }
     
     public void paintComponent(Graphics g)
