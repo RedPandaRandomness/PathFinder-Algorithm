@@ -118,7 +118,6 @@ public class BoardEditor extends Board implements MouseListener, ActionListener
                     }
                     else if (state == 1){
                         her.setLocation(grid[i][j].x/50,grid[i][j].y/50);
-                        System.out.println(her.getLocation());
                     }
                 }
             }
