@@ -19,6 +19,7 @@ import javax.swing.JButton;
 import java.awt.BorderLayout;
 import java.awt.GridLayout;
 import java.awt.Container;
+import javax.swing.Icon;
 
 
 /**
@@ -33,8 +34,9 @@ public class Board extends JPanel implements ActionListener
     public static final int WIDTH = 600;
     public static final int HEIGHT = 600;
     public Tile[][] grid = new Tile[12][12];
-    private ImageIcon house = new ImageIcon("Sprites/cabin.png");
-    private ImageIcon tree = new ImageIcon("Sprites/tree.png");
+    private ImageIcon house;
+    private ImageIcon tree;
+    private ImageIcon eraser;
     private ImageIcon[] rangers = new ImageIcon[4];
     private Ranger him;
     public boolean houseFound;
@@ -68,6 +70,10 @@ public class Board extends JPanel implements ActionListener
         rangers[2] = new ImageIcon("Sprites/Ranger/south.png");
         rangers[3] = new ImageIcon("Sprites/Ranger/west.png");
         
+        house = new ImageIcon("Sprites/cabin.png");
+        tree = new ImageIcon("Sprites/tree.png");
+        eraser = new ImageIcon("Sprites/eraser.png");
+        
         main();
     }
 
@@ -79,6 +85,7 @@ public class Board extends JPanel implements ActionListener
                 grid[i][j] = new Tile(i*50,j*50);
             }
         }
+        
         
         try{
             makeMap();
@@ -179,7 +186,7 @@ public class Board extends JPanel implements ActionListener
         timer.start();
     }
     
-     public void actionPerformed(ActionEvent e)
+    public void actionPerformed(ActionEvent e)
     {
         if(e.getActionCommand().equals("Caffeine mode")){
             caffeine = !caffeine;
@@ -203,20 +210,22 @@ public class Board extends JPanel implements ActionListener
             editPane.sendRanger(him);
             
             JPanel buttonPanel = new JPanel();
-            JButton tree = new JButton("Tree");
-            JButton ranger = new JButton("Ranger");
-            JButton cabin = new JButton("Cabin");
-            JButton eraser = new JButton("Eraser");
+            JButton btnTree = new JButton(tree);
+            JButton btnRanger = new JButton(rangers[2]);
+            JButton btnCabin = new JButton(house);
+            JButton btnEraser = new JButton(eraser);
             
-            buttonPanel.add(tree);
-            buttonPanel.add(ranger);
-            buttonPanel.add(cabin);
-            buttonPanel.add(eraser);
+            editPane.sendBtn(btnTree,btnRanger,btnCabin,btnEraser);
             
-            tree.addActionListener(editPane);
-            ranger.addActionListener(editPane);
-            cabin.addActionListener(editPane);
-            eraser.addActionListener(editPane);
+            buttonPanel.add(btnTree);
+            buttonPanel.add(btnRanger);
+            buttonPanel.add(btnCabin);
+            buttonPanel.add(btnEraser);
+            
+            btnTree.addActionListener(editPane);
+            btnRanger.addActionListener(editPane);
+            btnCabin.addActionListener(editPane);
+            btnEraser.addActionListener(editPane);
             
             editor.getContentPane().add(buttonPanel,BorderLayout.SOUTH);
             editor.getContentPane().add(editPane);
