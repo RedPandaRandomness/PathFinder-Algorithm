@@ -18,8 +18,8 @@ public class Tile extends Rectangle
     /* 0 = Blank (unvisited)
      * 1 = Visited
      * 2 = Crossed off
-     * 3 = tree (ignore)
-     * 4 = house
+     * 3 = House
+     * 4 = tree (ignore)
      */
     
     /**
@@ -29,11 +29,6 @@ public class Tile extends Rectangle
     {
         super(x,y,WIDTH,HEIGHT);
         setState(0);
-    }
-
-    public static void main(String[] args)
-    {
-        
     }
     
     public int getState()
@@ -58,14 +53,18 @@ public class Tile extends Rectangle
             colour = new Color(179,242,150); // lighter grassy
             this.state = state;
         }
-        else if(state == 3) // house?
+        else if(state == 3) // house
         {
             colour = new Color(135,217,98); // grassy
             this.state = state;
         }
-        else if(state == 4) // tree?
+        else if(state == 4) // tree
         {
             colour = new Color(85,177,58); // darker grassy
+            this.state = state;
+        }
+        else{
+            colour = new Color(0,0,0);
             this.state = state;
         }
     }
