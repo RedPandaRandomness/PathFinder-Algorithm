@@ -35,6 +35,7 @@ public class Board extends JPanel implements ActionListener
     public static final int HEIGHT = 600;
     public Tile[][] grid = new Tile[12][12];
     private ImageIcon house;
+    private ImageIcon ohno;
     private ImageIcon tree;
     private ImageIcon eraser;
     private ImageIcon[] rangers = new ImageIcon[4];
@@ -71,6 +72,7 @@ public class Board extends JPanel implements ActionListener
         rangers[3] = new ImageIcon("Sprites/Ranger/west.png");
         
         house = new ImageIcon("Sprites/cabin.png");
+        ohno = new ImageIcon("Sprites/drhouse.jpg");
         tree = new ImageIcon("Sprites/tree.png");
         eraser = new ImageIcon("Sprites/eraser.png");
         
@@ -160,8 +162,14 @@ public class Board extends JPanel implements ActionListener
                     brush.paintIcon(this,g,
                         grid[i][j].x,grid[i][j].y);
                 }
-                if(grid[i][j].getState() == 4){
+                else if(grid[i][j].getState() == 4){
                     ImageIcon brush = tree;
+
+                    brush.paintIcon(this,g,
+                        grid[i][j].x,grid[i][j].y);
+                }
+                else if(grid[i][j].getState() == 99) {
+                    ImageIcon brush = ohno;
 
                     brush.paintIcon(this,g,
                         grid[i][j].x,grid[i][j].y);
@@ -173,13 +181,12 @@ public class Board extends JPanel implements ActionListener
     public void findPath(){
         timer = new Timer(speed,new ActionListener(){
                 public void actionPerformed(ActionEvent evt){
-                if(!houseFound){him.look();}
-                
-                repaint();
                 if(grid[him.location.x][him.location.y].getState() == 3){
                     houseFound = true;
                 }
-                //int nope =0;
+                else{him.look();}
+                
+                repaint();
             }
         });
 
@@ -410,7 +417,7 @@ public class Board extends JPanel implements ActionListener
             {
                 for(int j = 0; j < 12; j++)
                 {
-                    grid[i][j].setState(3);
+                    grid[i][j].setState(99);
                 }
             }
         }
