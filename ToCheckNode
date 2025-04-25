@@ -12,7 +12,7 @@ public class ToCheckNode
     
     public ToCheckNode() //default constructor
     {
-        coor = new Point(0,0);
+        coor = new Point(-1,-1);
         next = null; // no other value 
     }
     
@@ -43,4 +43,9 @@ public class ToCheckNode
     public ToCheckNode getNext(){
         return next;
     }
+    
+    public String toText(){
+        return "Coor: ("+coor.x+", "+coor.y+")   Next: "+next;
+    }
+    
 }
