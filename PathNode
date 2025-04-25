@@ -43,4 +43,8 @@ public class PathNode
     public PathNode getNext(){
         return next;
     }
+    
+    public String toText(){
+        return "Coor: ("+coor.x+", "+coor.y+")   Next: "+next;
+    }
 }
