@@ -9,6 +9,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.Icon;
 import javax.swing.JButton;
+import java.awt.Point;
 
 
 /**
@@ -49,7 +50,6 @@ public class BoardEditor extends Board implements MouseListener, ActionListener
         her = ranger;
         her.setLocation(rangerStartPos);
     }
-    
     
     public void sendBtn(JButton a,JButton b, JButton c, JButton d ){
         btnTree = a;
@@ -112,7 +112,8 @@ public class BoardEditor extends Board implements MouseListener, ActionListener
     {   
         for(int i=0; i<grid.length; i ++){
             for(int j=0; j<grid[i].length; j++){
-                if(grid[i][j].contains(e.getX(),e.getY())){
+                if(grid[i][j].contains(e.getX(),e.getY()) 
+                    && !new Point(i,j).equals(her.getLocation())){
                     if(state != 1){
                         grid[i][j].setState(state);
                     }
