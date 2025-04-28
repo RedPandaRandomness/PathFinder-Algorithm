@@ -1,3 +1,5 @@
+//SMT funny
+
 import static java.lang.System.out; //shortcut for writing output
 import javax.swing.JPanel;
 import java.awt.Dimension;
