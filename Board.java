@@ -47,6 +47,7 @@ public class Board extends JPanel implements ActionListener
     private Scanner map;
     private String[] mapA = new String[12];
     public Point rangerStartPos;
+    private boolean rangerSent = false; 
     
     Timer timer;
     public int speed = 300;
@@ -126,7 +127,7 @@ public class Board extends JPanel implements ActionListener
 
     public void sendRanger(Ranger ranger){
         him = ranger;
-        him.setLocation(rangerStartPos);     
+        him.setLocation(rangerStartPos);
     }
     
 
@@ -206,10 +207,28 @@ public class Board extends JPanel implements ActionListener
                 timer.restart();
             }
         }
-        else if(e.getActionCommand().equals("Send ranger")){
+        else if(e.getActionCommand().equals("Send ranger") && !rangerSent){
+            rangerSent = true;
             findPath();            
         }
-        else if(e.getActionCommand().equals("Edit maze")){
+        else if(e.getActionCommand().equals("Reset")){
+            if(timer!= null && timer.isRunning()){timer.stop();}
+            
+            for(int i = 0; i<grid.length; i++){
+                for(int j = 0; j<grid[i].length; j++){
+                    grid[i][j].setState(0);
+                }
+            }
+            
+            try{makeMap();}
+            catch(Exception f){setBoard(rng.nextInt(2));}
+            
+            him.setLocation(rangerStartPos);
+            rangerSent = false;
+            
+            repaint();
+        }
+        else if(e.getActionCommand().equals("Edit maze") && !rangerSent){
             JFrame editor = new JFrame();
             editor.setTitle("Maze Editor");
             
