@@ -32,6 +32,13 @@ public class Ranger
     {
         return face;
     }
+    
+    public void setFace(int a)
+    {
+        if(a>=0 && a<=3){
+            face = a;
+        }
+    }
 
     public Point getLocation()
     {
