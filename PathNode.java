@@ -1,3 +1,5 @@
+//SMT funny
+
 import java.awt.Point;
 
 /**
