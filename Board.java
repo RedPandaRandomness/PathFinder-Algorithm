@@ -226,6 +226,7 @@ public class Board extends JPanel implements ActionListener
             catch(Exception f){setBoard(rng.nextInt(2));}
             
             him.setLocation(rangerStartPos);
+            him.setFace(2);
             rangerSent = false;
             
             repaint();
