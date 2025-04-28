@@ -33,11 +33,12 @@ public class Driver
         JButton speed = new JButton("Caffeine mode");
         JButton editor = new JButton("Edit maze");
         JButton start = new JButton("Send ranger");
+        JButton reset = new JButton("Reset");
         
         buttonPanel.add(speed);
         buttonPanel.add(editor);
         buttonPanel.add(start);
-        
+        buttonPanel.add(reset); 
         
         //Make objects for game
         maze = new Board();
@@ -47,6 +48,7 @@ public class Driver
         speed.addActionListener(maze);
         editor.addActionListener(maze);
         start.addActionListener(maze);
+        reset.addActionListener(maze);
         
         board.getContentPane().add(buttonPanel,BorderLayout.SOUTH);
         board.getContentPane().add(maze);
