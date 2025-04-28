@@ -1,3 +1,5 @@
+//SMT funny
+
 import static java.lang.System.out; //shortcut for writing output
 import java.awt.Rectangle;
 import java.awt.Color;
