@@ -25,10 +25,21 @@ import javax.swing.Icon;
 
 
 /**
- * Write a description of class Board here.
+ * Board:
+ * - Makes map//maze/grid (I switch between the 3 names a lot, they're
+ *  all the same thing)
+ * - Load/Display all the Images/Icons
+ * - Reads file to make map or choose random preset
+ * - Send Ranger to start searching
+ * - Has timer to tell Ranger to search around it 
+ * - Buttons to :
+ *      - Edit Maze
+ *      - Reset
+ *      - Activate Cafeiene mode
+ *      - Send Ranger
  *
- * @author (Lora & Benj)
- * @version (a version number or a date)
+ * @author Lora & Benji
+ * @version 1.0.0
  */
 public class Board extends JPanel implements ActionListener
 {
@@ -36,39 +47,41 @@ public class Board extends JPanel implements ActionListener
     public static final int WIDTH = 600;
     public static final int HEIGHT = 600;
     public Tile[][] grid = new Tile[12][12];
+    //Load Icons
     private ImageIcon house;
     private ImageIcon ohno;
     private ImageIcon tree;
     private ImageIcon eraser;
     private ImageIcon[] rangers = new ImageIcon[4];
+    
     private Ranger him;
     public boolean houseFound;
     private Random rng = new Random();
     private Color line;
-    private File file = new File("Board/map.txt");
+    private File file = new File("Board/map.txt"); //Loads map file
     private Scanner map;
     private String[] mapA = new String[12];
     public Point rangerStartPos;
     private boolean rangerSent = false; 
     
     Timer timer;
-    public int speed = 300;
-    private boolean caffeine = false;
+    public int speed = 300; //Delay on timer
+    private boolean caffeine = false; //Cafiene mode (boosts speed)
 
     /**
-     * Constructor for objects of class Board
+     * Makes a new game board and sets up the sprites
      */
     public Board()
     {
-        // initialise instance variables
         setPreferredSize(new Dimension(WIDTH,HEIGHT));
         setBackground(new Color(211,211,211));
 
-        //saftey check in case program didn't properly close
+        //Makes sure timer is stopped at beggining of code
         if(timer!= null && timer.isRunning()){
             timer.stop();
         }
         
+        //Loads all the images
         rangers[0] = new ImageIcon("Sprites/Ranger/north.png");
         rangers[1] = new ImageIcon("Sprites/Ranger/east.png");
         rangers[2] = new ImageIcon("Sprites/Ranger/south.png");
@@ -82,29 +95,34 @@ public class Board extends JPanel implements ActionListener
         main();
     }
 
+    //Creates board. If map file cant be read, pick a preset board
     public void main()
     {   
-        //make tiles
         for(int i = 0; i<grid.length; i++){
             for(int j = 0; j<grid[i].length; j++){
                 grid[i][j] = new Tile(i*50,j*50);
             }
         }
         
-        
         try{
             makeMap();
         }
         catch(Exception e){
-            setBoard(rng.nextInt(2)); // asks for value 0-2
+            setBoard(rng.nextInt(2));
         }
     }
     
+    /*
+     * Reads map file and makes grid based off it.
+     * Load 12 arrays of Strings to store each of the characters 
+     * in the map. Then go through each tile and sets it to 
+     * the right state based on the char in the map array
+     */
     public void makeMap() throws IOException
     {
         map = new Scanner(file);
         
-        //sets map string
+        //Sets an Array of strings containing map
         int temp = 0;
         while(map.hasNextLine() )
         {
@@ -127,12 +145,13 @@ public class Board extends JPanel implements ActionListener
         }
     }
 
+    //Gives board a ranger to work with (From driver)
     public void sendRanger(Ranger ranger){
-        him = ranger;
+        him = ranger; 
         him.setLocation(rangerStartPos);
     }
     
-
+    //Draws stuff
     public void paintComponent(Graphics g)
     {
         Graphics2D outline = (Graphics2D) g;
@@ -155,25 +174,25 @@ public class Board extends JPanel implements ActionListener
 
                 //Draw Ranger
                 ImageIcon rangerBrush = rangers[him.getFacing()];
-
                 rangerBrush.paintIcon(this,g,
                     him.location.x*50,him.location.y*50);
-
+                
+                    
                 if(grid[i][j].getState() == 3){
+                    //Draw Cabin
                     ImageIcon brush = house;
-
                     brush.paintIcon(this,g,
                         grid[i][j].x,grid[i][j].y);
                 }
                 else if(grid[i][j].getState() == 4){
+                    //Draw tree
                     ImageIcon brush = tree;
-
                     brush.paintIcon(this,g,
                         grid[i][j].x,grid[i][j].y);
                 }
                 else if(grid[i][j].getState() == 99) {
+                    //Draws... him (Dr. Gregory House)
                     ImageIcon brush = ohno;
-
                     brush.paintIcon(this,g,
                         grid[i][j].x,grid[i][j].y);
                 }
@@ -181,9 +200,14 @@ public class Board extends JPanel implements ActionListener
         }
     }
 
+    /*
+     * Tells ranger to look for next availible tile based on a timer 
+     * (Taken from Game of Memory, which I took from Oracle documentation)
+     */
     public void findPath(){
         timer = new Timer(speed,new ActionListener(){
                 public void actionPerformed(ActionEvent evt){
+                //If Ranger is on cabin, house if found. Stop looking
                 if(grid[him.location.x][him.location.y].getState() == 3){
                     houseFound = true;
                 }
@@ -196,8 +220,10 @@ public class Board extends JPanel implements ActionListener
         timer.start();
     }
     
+    //Buttons
     public void actionPerformed(ActionEvent e)
     {
+        //Speeds up the ranger
         if(e.getActionCommand().equals("Caffeine mode")){
             caffeine = !caffeine;
             if(caffeine){
@@ -210,18 +236,19 @@ public class Board extends JPanel implements ActionListener
             }
         }
         else if(e.getActionCommand().equals("Send ranger") && !rangerSent){
+            //Starts Ranger's search
             rangerSent = true;
             findPath();            
         }
         else if(e.getActionCommand().equals("Reset")){
-            if(timer!= null && timer.isRunning()){timer.stop();}
+            //Reset everything to how it was at the start
             
+            if(timer!= null && timer.isRunning()){timer.stop();}
             for(int i = 0; i<grid.length; i++){
                 for(int j = 0; j<grid[i].length; j++){
                     grid[i][j].setState(0);
                 }
             }
-            
             try{makeMap();}
             catch(Exception f){setBoard(rng.nextInt(2));}
             
@@ -232,6 +259,7 @@ public class Board extends JPanel implements ActionListener
             repaint();
         }
         else if(e.getActionCommand().equals("Edit maze") && !rangerSent){
+            //Makes buttons for the maze editor and passes them to it so it can listen to them 
             JFrame editor = new JFrame();
             editor.setTitle("Maze Editor");
             
@@ -263,6 +291,7 @@ public class Board extends JPanel implements ActionListener
         }
     }
 
+    //Loads default board states
     public void setBoard(int mazeType)
     {
         if(mazeType == 0)
@@ -428,10 +457,6 @@ public class Board extends JPanel implements ActionListener
             grid[8][11].setState(4);
             grid[10][11].setState(4);
             grid[11][11].setState(3);
-        }
-        else if(mazeType == 2)
-        {
-
         }
         else // shouldn't be called, panic
         {
