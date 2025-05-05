@@ -3,25 +3,25 @@
 import java.awt.Point;
 
 /**
- * 
- * 
+ * Path nodes:
+ *  - Used to store the path the Ranger has taken 
+ *  - Used later for backtracking
  */
 public class PathNode
 {
-    //
     private Point coor;
-    private PathNode next; //a reference to the next item in our deck
+    private PathNode next;
     
     public PathNode() //default constructor
     {
         coor = new Point(0,0);
-        next = null; // no other value 
+        next = null;
     }
     
-    public PathNode(Point coor)
+    public PathNode(Point coor) //Gives a coordinate to make node with
     {
-        this.coor = coor; //unknown
-        next = null; // no other value 
+        this.coor = coor;
+        next = null;
     }
     
     public Point getCoor()
