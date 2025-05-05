@@ -3,25 +3,25 @@
 import java.awt.Point;
 
 /**
- * 
- * 
+ * Crossroad nodes:
+ *  - Used to store coordinates for ranger to check again later
  */
 public class ToCheckNode
 {
     //
     private Point coor;
-    private ToCheckNode next; //a reference to the next item in our deck
+    private ToCheckNode next;
     
     public ToCheckNode() //default constructor
     {
         coor = new Point(-1,-1);
-        next = null; // no other value 
+        next = null;
     }
     
     public ToCheckNode(Point coor)
     {
-        this.coor = coor; //unknown
-        next = null; // no other value 
+        this.coor = coor;
+        next = null;
     }
     
     public Point getCoor()
