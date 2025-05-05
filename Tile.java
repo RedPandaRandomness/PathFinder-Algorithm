@@ -20,8 +20,9 @@ public class Tile extends Rectangle
     /* 0 = Blank (unvisited)
      * 1 = Visited
      * 2 = Crossed off
-     * 3 = House
+     * 3 = House (Cabin)
      * 4 = tree (ignore)
+     * 99 = Dr. house...
      */
     
     /**
