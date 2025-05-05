@@ -8,10 +8,17 @@ import java.awt.BorderLayout;
 import java.awt.event.ActionListener;
 
 /**
- * Write a description of class Driver here.
+ * PathFinderAlgorithm 
+ * - Load a default maze
+ * - Can edit it
+ * - Has a Ranger that can search for end of maze (Cabin)
+ * - Can reset to search new maze 
  *
- * @author (your name)
- * @version (a version number or a date)
+ * @Authors: Lora Frederico, Benjamin Ford
+ * @Development date: April 7th - May 1st 2025
+ * @Version: 1.0.0
+ * - Base functionality (main goals of project)
+ * - Cafiene mode to speed up search
  */
 public class Driver
 {
@@ -47,6 +54,7 @@ public class Driver
         him = new Ranger(maze);
         maze.sendRanger(him);
         
+        //Listen to buttons
         speed.addActionListener(maze);
         editor.addActionListener(maze);
         start.addActionListener(maze);
