@@ -15,10 +15,11 @@ import java.awt.Point;
 
 
 /**
- * Write a description of class BoardEditor here.
+ * Board editor 
+ * - Lets you change the states of the tiles on the board
  *
- * @author (your name)
- * @version (a version number or a date)
+ * @author Lora Frederico
+ * @version 1.0.0
  */
 public class BoardEditor extends Board implements MouseListener, ActionListener
 {
@@ -48,11 +49,13 @@ public class BoardEditor extends Board implements MouseListener, ActionListener
         ogBoard = board;
     }
     
+    //Gives the editor the ranger from the board
     public void sendRanger(Ranger ranger){
         her = ranger;
         her.setLocation(rangerStartPos);
     }
-    
+
+    //"Passes" the buttons from board
     public void sendBtn(JButton a,JButton b, JButton c, JButton d ){
         btnTree = a;
         btnRanger = b;
@@ -60,6 +63,10 @@ public class BoardEditor extends Board implements MouseListener, ActionListener
         btnEraser = d;
     }
     
+    /*
+     * Listens to button and set "cursor" state based on what button you pressed
+     * The state reflects the state we want to change the tile to
+     */
     
     public void actionPerformed(ActionEvent e)
     {
@@ -94,14 +101,15 @@ public class BoardEditor extends Board implements MouseListener, ActionListener
                 ranger.paintIcon(this,g,her.getLocation().x*50,
                                 her.getLocation().y*50);
                 
-
+                //Draws house
                 if(grid[i][j].getState() == 3){
                     ImageIcon brush = house;
 
                     brush.paintIcon(this,g,
                         grid[i][j].x,grid[i][j].y);
                 }
-                if(grid[i][j].getState() == 4){
+                //Draws tree
+                else if(grid[i][j].getState() == 4){
                     ImageIcon brush = tree;
 
                     brush.paintIcon(this,g,
@@ -110,6 +118,13 @@ public class BoardEditor extends Board implements MouseListener, ActionListener
             }   
         }
     }
+    
+    /*
+     * Checks which tile you clicked on and as long as the ranger isnt there,
+     * set that tile's state to whatever the "Cursor's" state is (based on
+     * the button pressed). If the cursor state is 1, don't change the tile
+     * state but instead move the ranger there
+     */
     public void mouseClicked(MouseEvent e)
     {   
         for(int i=0; i<grid.length; i ++){
