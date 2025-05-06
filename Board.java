@@ -39,7 +39,11 @@ import javax.swing.Icon;
  *      - Send Ranger
  *
  * @author Lora & Benji
- * @version 1.0.0
+ * @version 1.0.1
+ *  - Fixed bug where Cafiene mode would try 
+ *      to activate before Ranger sent
+ *  - Fixed bug where Ranger wouldn't clear 
+ *      stacks after resetting 
  */
 public class Board extends JPanel implements ActionListener
 {
@@ -224,7 +228,7 @@ public class Board extends JPanel implements ActionListener
     public void actionPerformed(ActionEvent e)
     {
         //Speeds up the ranger
-        if(e.getActionCommand().equals("Caffeine mode")){
+        if(e.getActionCommand().equals("Caffeine mode") && rangerSent){
             caffeine = !caffeine;
             if(caffeine){
                 timer.setDelay(50);
@@ -254,6 +258,8 @@ public class Board extends JPanel implements ActionListener
             
             him.setLocation(rangerStartPos);
             him.setFace(2);
+            him.topP.setNext(null);
+            him.topC.setNext(null);
             rangerSent = false;
             
             repaint();
